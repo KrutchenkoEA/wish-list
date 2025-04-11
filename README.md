@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # WishList
+=======
+# Wishlist
+>>>>>>> b4456a3 (initial commit)
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
 
