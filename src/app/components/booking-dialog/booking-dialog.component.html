@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Забронировать подарок</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill" class="w-full">
+    <mat-label>Ваше имя</mat-label>
+    <input matInput [formControl]="nameControl" />
+    <mat-error *ngIf="nameControl.hasError('required')">
+      Укажите имя
+    </mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Отмена</button>
+  <button mat-flat-button color="primary" (click)="confirm()" [disabled]="nameControl.invalid">
+    Подтвердить
+  </button>
+</mat-dialog-actions>

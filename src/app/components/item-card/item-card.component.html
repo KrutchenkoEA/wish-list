@@ -1,0 +1,31 @@
+<mat-card class="item-card">
+  <img mat-card-image [src]="item.imageUrl" [alt]="item.title" />
+  <mat-card-header>
+    <mat-card-title>{{ item.title }}</mat-card-title>
+    <mat-card-subtitle>
+      <a *ngIf="item.link" [href]="item.link" target="_blank" rel="noopener">Ссылка</a>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ item.description }}</p>
+    <mat-chip-list>
+      <mat-chip *ngFor="let tag of item.tags" color="primary">{{ tag }}</mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-flat-button color="primary" (click)="openBookingDialog()" [disabled]="item.status === 'booked'">
+      {{ item.status === 'booked' ? 'Забронировано' : 'Забронировать' }}
+    </button>
+    <button mat-button color="warn" *ngIf="item.status === 'booked'">Отменить</button>
+    <button mat-button color="accent">Возможно</button>
+  </mat-card-actions>
+
+  <mat-card-footer *ngIf="item.comments?.length">
+    <h4>Комментарии</h4>
+    <div *ngFor="let comment of item.comments">
+      <strong>{{ comment.name }}</strong>: {{ comment.text }}
+    </div>
+  </mat-card-footer>
+</mat-card>

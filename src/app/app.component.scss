@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
