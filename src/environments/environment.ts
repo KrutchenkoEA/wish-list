@@ -1,11 +1,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'your-api-key',
-    authDomain: 'your-auth-domain.firebaseapp.com',
-    projectId: 'your-project-id',
-    storageBucket: 'your-storage-bucket.appspot.com',
-    messagingSenderId: 'your-msg-id',
-    appId: 'your-app-id',
+    projectId: 'kr-wish-list-app',
+    appId: '1:958363621379:web:7e7cad49dc8e8b988e9636',
+    storageBucket: 'kr-wish-list-app.firebasestorage.app',
+    apiKey: 'AIzaSyDY098Zchcs8F56ITo5zvszcc_deJXt48g',
+    authDomain: 'kr-wish-list-app.firebaseapp.com',
+    messagingSenderId: '958363621379',
   }
 };
