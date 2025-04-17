@@ -24,10 +24,18 @@ $dark-theme: mat.define-theme((
 
 .dark-theme {
   @include mat.core-theme($dark-theme);
+  body {
+    background-color: #121212;
+    color: white;
+  }
 }
 
 .light-theme {
   @include mat.core-theme($light-theme);
+  body {
+    background-color: white;
+    color: black;
+  }
 }
 
 

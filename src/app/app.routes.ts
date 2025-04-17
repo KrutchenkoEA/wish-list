@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 
 export const routes: Routes = [
   {
-    path: 'a',
+    path: '',
     loadComponent: () => import('./components/item-list/item-list.component').then(m => m.ItemListComponent),
   },
   {
