@@ -1,0 +1,23 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.grid-list {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .grid-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

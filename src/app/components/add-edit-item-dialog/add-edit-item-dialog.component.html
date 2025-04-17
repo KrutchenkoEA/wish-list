@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>{{ data ? 'Редактировать подарок' : 'Добавить подарок' }}</h1>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>Название</mat-label>
+    <input matInput formControlName="title" />
+    <mat-error *ngIf="form.controls['title'].invalid">Обязательное поле</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Описание</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Ссылка на подарок</mat-label>
+    <input matInput formControlName="link" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Отмена</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">
+    {{ data ? 'Сохранить' : 'Добавить' }}
+  </button>
+</mat-dialog-actions>
