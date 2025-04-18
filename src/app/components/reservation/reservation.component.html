@@ -3,7 +3,7 @@
   <form (ngSubmit)="reserve()" [formGroup]="formGroup">
     <mat-form-field appearance="fill">
       <mat-label>Ваше имя</mat-label>
-      <input [value]="storedName" matInput placeholder="Введите имя" />
+      <input [formControl]="nameControl" [value]="storedName" matInput placeholder="Введите имя" />
       @if (nameControl.invalid) {
         <mat-error>Имя обязательно</mat-error>
       }

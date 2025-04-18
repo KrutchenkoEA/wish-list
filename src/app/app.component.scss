@@ -23,3 +23,12 @@
   cursor: pointer;
   padding: 0.25rem 0.75rem;
 }
+
+@media (max-width: 300px) {
+  mat-toolbar{
+    overflow: auto;
+  }
+  .tab, logo {
+    font-size: 1rem;
+  }
+}

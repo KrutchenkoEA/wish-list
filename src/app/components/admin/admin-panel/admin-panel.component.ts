@@ -9,6 +9,7 @@ import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-
 import { MockBackendService } from '../../../services/mock-backend.service';
 import { Item } from '../../../models/item.model';
 import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-item-dialog.component';
+import { MatChip } from '@angular/material/chips';
 
 @Component({
   selector: 'app-admin-panel',
@@ -20,6 +21,7 @@ import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-ite
     MatDialogModule,
     MatSnackBarModule,
     DragDropModule,
+    MatChip,
   ],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',

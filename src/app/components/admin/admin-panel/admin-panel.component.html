@@ -9,8 +9,13 @@
       <mat-card
         cdkDrag
         class="item-card"
+        [class.item-card_disabled]="!item.isActive"
       >
-        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-title>{{ item.title }}
+          @if (!item.isActive) {
+            <mat-chip>Не активен</mat-chip>
+          }
+        </mat-card-title>
         <mat-card-content>
           <p>{{ item.description }}</p>
           @if (item.link) {
@@ -19,6 +24,7 @@
           @if (item.reservedBy) {
             <p>Забронировано: {{ item.reservedBy }}</p>
           }
+
         </mat-card-content>
         <mat-card-actions>
           <button (click)="openEditDialog(item)" mat-button>Редактировать</button>

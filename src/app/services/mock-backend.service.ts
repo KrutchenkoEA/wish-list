@@ -3,6 +3,7 @@ import { Item } from '../models/item.model';
 import { Reservation } from '../models/reservation.model';
 import { User } from '../models/user.model';
 import { v4 as uuidv4 } from 'uuid';
+import { DEMO_ITEMS } from '../const/demo-items.mock';
 
 @Injectable({ providedIn: 'root' })
 export class MockBackendService {
@@ -16,23 +17,7 @@ export class MockBackendService {
 
   private initData() {
     if (!localStorage.getItem(this.itemsKey)) {
-      const demoItems: Item[] = [
-        {
-          id: uuidv4(),
-          title: 'Книга: Чистый код',
-          description: 'Руководство по написанию читаемого кода',
-          link: 'https://example.com/book',
-          isActive: true,
-        },
-        {
-          id: uuidv4(),
-          title: 'Наушники Sony WH-1000XM4',
-          description: 'Беспроводные наушники с шумоподавлением',
-          link: 'https://example.com/headphones',
-          isActive: true,
-        },
-      ];
-      localStorage.setItem(this.itemsKey, JSON.stringify(demoItems));
+      localStorage.setItem(this.itemsKey, JSON.stringify(DEMO_ITEMS));
       localStorage.setItem(this.reservationsKey, JSON.stringify([]));
       localStorage.setItem(this.usersKey, JSON.stringify([]));
     }
@@ -82,7 +67,7 @@ export class MockBackendService {
       itemId,
       userName,
       deviceFingerprint,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
     this.setData(this.reservationsKey, reservations);
     return true;

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,10 +24,10 @@ import { FingerprintService } from '../../services/fingetprint.service';
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationComponent implements OnInit {
-  @Input() item!: Item;
+  item!: Item;
 
   dialogRef = inject(MatDialogRef);
   private backend = inject(MockBackendService);
@@ -42,6 +42,10 @@ export class ReservationComponent implements OnInit {
 
   get nameControl() {
     return this.formGroup.controls.name;
+  }
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { item: Item } | null) {
+    this.item = data.item;
   }
 
   async ngOnInit() {
@@ -59,7 +63,6 @@ export class ReservationComponent implements OnInit {
 
     const name = this.nameControl.value!;
     const deviceId = await this.fingerprint.getDeviceIdAsync();
-
     try {
       await this.backend.reserveItem(this.item.id, name, deviceId);
       this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });

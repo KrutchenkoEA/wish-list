@@ -6,17 +6,16 @@ import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { AuthService } from './services/auth.service';
-import { NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminLoginDialogComponent } from './components/admin/admin-login-dialog/admin-login-dialog.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, MatIcon, MatIconButton, MatToolbar, MatTooltip, NgIf],
+  imports: [RouterModule, MatIcon, MatIconButton, MatToolbar, MatTooltip],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   private theme = inject(ThemeService);

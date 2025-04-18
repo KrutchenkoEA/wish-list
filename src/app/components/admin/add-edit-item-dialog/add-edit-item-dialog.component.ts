@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Item } from '../../../models/item.model';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-add-edit-item-dialog',
@@ -18,6 +19,7 @@ import { Item } from '../../../models/item.model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatCheckbox,
   ],
   templateUrl: './add-edit-item-dialog.component.html',
   styleUrl: './add-edit-item-dialog.component.scss',
@@ -36,12 +38,14 @@ export class AddEditItemDialogComponent {
       title: ['', Validators.required],
       description: [''],
       link: [''],
+      isActive: [true],
     });
     if (data) {
       this.form.patchValue({
         title: data.title,
         description: data.description,
         link: data.link,
+        isActive: data.isActive ?? true,
       });
     }
   }

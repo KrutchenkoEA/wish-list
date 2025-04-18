@@ -12,7 +12,7 @@ import { ReservationComponent } from '../reservation/reservation.component';
   imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule],
   templateUrl: './item-card.component.html',
   styleUrl: './item-card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemCardComponent {
   @Input() item!: Item;

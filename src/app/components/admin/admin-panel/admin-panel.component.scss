@@ -1,9 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 65px);
+  width: 100%;
+  padding: 2rem;
+  gap: 1rem;
+  overflow: auto;
+}
+
 .admin-actions {
   display: flex;
 
   button {
     width: 100%;
-    margin: 2rem;
   }
 }
 
@@ -16,4 +25,14 @@
 .item-card {
   margin-bottom: 10px;
   cursor: move;
+}
+
+mat-card {
+  padding: 1rem;
+}
+
+mat-card-title {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
