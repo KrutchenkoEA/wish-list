@@ -1,0 +1,15 @@
+@if (loading()) {
+  <div class="spinner-container">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+} @else {
+  @for (item of activeItems(); track item.id) {
+    <app-item-card [deviceId]="deviceId"
+                   (cancelReservation)="cancelReservation($event)"
+                   (openReservation)="openReservation($event)"
+                   class="card"
+                   [item]="item">
+    </app-item-card>
+  }
+}
+

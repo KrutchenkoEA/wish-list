@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/themes';
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: hidden;
+  flex-flow: column;
+
+  &.dark-theme {
+    @include themes.dark-theme-mixin
+  }
+
+  &.light-theme {
+    @include themes.light-theme-mixin
+  }
+}
+
+* {
+  box-sizing: border-box;
+}

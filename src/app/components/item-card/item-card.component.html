@@ -1,0 +1,21 @@
+<mat-card class="item-card">
+  <mat-card-title>{{ item.title }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ item.description }}</p>
+    @if (item.link) {
+      <a href="{{ item.link }}" target="_blank">Ссылка на подарок</a>
+    }
+    @if (item.reservedBy) {
+      <p><span>Забронировано:</span> {{ item.reservedBy }}, {{ item.reservedAt | date: 'dd.MM.yyyy HH:mm:ss' }}
+      </p>
+    }
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="openReservation.emit(item)" [disabled]="!!item.reservedBy" color="primary" mat-raised-button>
+      {{ item.reservedBy ? 'Забронировано' : 'Забронировать' }}
+    </button>
+    @if (item.reservedBy && item.reservedDeviceId === deviceId) {
+      <button (click)="cancelReservation.emit(item)" color="primary" mat-raised-button>Отменить бронирование</button>
+    }
+  </mat-card-actions>
+</mat-card>

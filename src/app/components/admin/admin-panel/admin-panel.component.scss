@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 65px);
+  width: 100%;
+  padding: 2rem;
+  gap: 1rem;
+  overflow: auto;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  width: 100%;
+}
+
+.admin-actions {
+  display: flex;
+
+  button {
+    width: 100%;
+  }
+}
+
+.admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item-card {
+  margin-bottom: 10px;
+  cursor: move;
+
+  span {
+    font-weight: bold;
+  }
+}
+
+mat-card {
+  padding: 1rem;
+}
+
+mat-card-title {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}

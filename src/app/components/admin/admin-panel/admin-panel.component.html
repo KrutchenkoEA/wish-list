@@ -1,0 +1,52 @@
+@if (loading()) {
+  <div class="spinner-container">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+} @else {
+  <div class="admin-actions">
+    <button (click)="openAddDialog()" color="primary" mat-raised-button>Добавить карточку</button>
+  </div>
+
+  <div class="admin-section">
+    <h2>Все подарки</h2>
+    <div (cdkDropListDropped)="drop($event)" cdkDropList>
+      @for (item of items(); track i; let i = $index) {
+        <mat-card
+          cdkDrag
+          class="item-card"
+          [class.item-card_disabled]="!item.isActive"
+        >
+          <mat-card-title>{{ item.title }}
+            @if (!item.isActive) {
+              <mat-chip>Не активен</mat-chip>
+            }
+          </mat-card-title>
+          <mat-card-content>
+            <p>{{ item.description }}</p>
+            @if (item.link) {
+              <a href="{{ item.link }}" target="_blank">Ссылка</a>
+            }
+            @if (item.reservedBy) {
+              <p><span>Забронировано:</span> {{ item.reservedBy }}, {{ item.reservedAt | date: 'dd.MM.yyyy HH:mm:ss' }}
+              </p>
+              <p><span>deviceID:</span> {{ item.reservedDeviceId }}</p>
+            }
+          </mat-card-content>
+          <mat-card-actions>
+            <button (click)="openEditDialog(item)" mat-button>Редактировать</button>
+            <button (click)="deleteItem(item.id)" color="warn" mat-button>Удалить</button>
+            @if (item.reservedBy) {
+              <button
+                (click)="cancelReservation(item.id, item.reservedDeviceId)"
+                color="accent"
+                mat-button
+              >
+                Отменить бронирование
+              </button>
+            }
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--mat-sys-tertiary);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.tab, logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+
+  &:hover {
+    font-weight: normal;
+  }
+}
+
+@media (max-width: 300px) {
+  mat-toolbar {
+    overflow: auto;
+  }
+  .tab, logo {
+    font-size: 1rem;
+  }
+}
+
+.device {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  font-size: 0.5rem;
+  height: 0.5rem;
+}
