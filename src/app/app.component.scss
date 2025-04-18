@@ -22,10 +22,14 @@
 .tab {
   cursor: pointer;
   padding: 0.25rem 0.75rem;
+
+  &:hover {
+    font-weight: normal;
+  }
 }
 
 @media (max-width: 300px) {
-  mat-toolbar{
+  mat-toolbar {
     overflow: auto;
   }
   .tab, logo {
