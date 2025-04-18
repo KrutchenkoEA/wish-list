@@ -4,17 +4,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-admin-login-dialog',
   standalone: true,
   imports: [
     ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogActions,
-    MatDialogContent, MatDialogTitle, NgIf,
+    MatDialogContent, MatDialogTitle,
   ],
   templateUrl: './admin-login-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminLoginDialogComponent {
   dialogRef = inject(MatDialogRef<AdminLoginDialogComponent>);

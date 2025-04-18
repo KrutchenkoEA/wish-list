@@ -4,7 +4,12 @@
   </div>
 } @else {
   @for (item of activeItems(); track item.id) {
-    <app-item-card class="card" [item]="item"></app-item-card>
+    <app-item-card [deviceId]="deviceId"
+                   (cancelReservation)="cancelReservation($event)"
+                   (openReservation)="openReservation($event)"
+                   class="card"
+                   [item]="item">
+    </app-item-card>
   }
 }
 

@@ -6,4 +6,5 @@ export interface Item {
   reservedBy?: string;
   reservedAt?: number;
   isActive: boolean;
+  reservedDeviceId?: string;
 }

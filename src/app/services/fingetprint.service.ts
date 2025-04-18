@@ -3,7 +3,7 @@ import FingerprintJS from '@fingerprintjs/fingerprintjs';
 
 @Injectable({ providedIn: 'root' })
 export class FingerprintService {
-  private deviceId = signal<string | null>(null);
+  public deviceId = signal<string | null>(null);
 
   constructor() {
     this.initFingerprint();

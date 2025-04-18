@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Item } from '../../models/item.model';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { ReservationComponent } from '../reservation/reservation.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-item-card',
@@ -16,11 +15,7 @@ import { ReservationComponent } from '../reservation/reservation.component';
 })
 export class ItemCardComponent {
   @Input() item!: Item;
-  private dialog = inject(MatDialog);
-
-  openReservationDialog(): void {
-    this.dialog.open(ReservationComponent, {
-      data: { item: this.item },
-    });
-  }
+  @Input() deviceId!: string;
+  @Output() openReservation = new EventEmitter();
+  @Output() cancelReservation = new EventEmitter();
 }

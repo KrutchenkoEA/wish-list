@@ -1,5 +1,5 @@
 // src/app/features/admin-panel/dialogs/add-edit-item-dialog.component.ts
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,27 +25,26 @@ import { MatCheckbox } from '@angular/material/checkbox';
   styleUrl: './add-edit-item-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditItemDialogComponent {
+export class AddEditItemDialogComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private dialogRef = inject<MatDialogRef<AddEditItemDialogComponent>>(MatDialogRef);
+
+  data = inject<Item | null>(MAT_DIALOG_DATA);
   form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddEditItemDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Item | null,
-  ) {
-
+  ngOnInit(): void {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: [''],
       link: [''],
       isActive: [true],
     });
-    if (data) {
+    if (this.data) {
       this.form.patchValue({
-        title: data.title,
-        description: data.description,
-        link: data.link,
-        isActive: data.isActive ?? true,
+        title: this.data.title,
+        description: this.data.description,
+        link: this.data.link,
+        isActive: this.data.isActive ?? true,
       });
     }
   }
@@ -55,7 +54,6 @@ export class AddEditItemDialogComponent {
     const updated: Item = {
       ...this.data,
       ...this.form.value,
-      isActive: true,
       reservedBy: this.data?.reservedBy ?? null,
       id: this.data?.id ?? crypto.randomUUID(),
     };

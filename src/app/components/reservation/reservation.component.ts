@@ -7,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Item } from '../../models/item.model';
-import { MockBackendService } from '../../services/mock-backend.service';
 import { FingerprintService } from '../../services/fingetprint.service';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-reservation',
@@ -29,8 +29,8 @@ import { FingerprintService } from '../../services/fingetprint.service';
 export class ReservationComponent implements OnInit {
   item!: Item;
 
-  dialogRef = inject(MatDialogRef);
-  private backend = inject(MockBackendService);
+  dialogRef = inject<MatDialogRef<ReservationComponent>>(MatDialogRef);
+  private backend = inject(FirebaseService);
   private fingerprint = inject(FingerprintService);
   private snackBar = inject(MatSnackBar);
 
@@ -48,8 +48,8 @@ export class ReservationComponent implements OnInit {
     this.item = data.item;
   }
 
-  async ngOnInit() {
-    const deviceId = await this.fingerprint.getDeviceIdAsync();
+  ngOnInit(): void {
+    const deviceId = this.fingerprint.getDeviceId();
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find((u: any) => u.deviceId === deviceId);
     if (user) {
@@ -58,13 +58,25 @@ export class ReservationComponent implements OnInit {
     }
   }
 
-  async reserve() {
+  reserve(): void {
     if (this.nameControl.invalid) return;
 
     const name = this.nameControl.value!;
-    const deviceId = await this.fingerprint.getDeviceIdAsync();
+    const deviceId = this.fingerprint.getDeviceId();
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const existingUserIndex = users.findIndex((u: any) => u.deviceId === deviceId);
+
+    if (existingUserIndex !== -1) {
+      users[existingUserIndex].lastName = name;
+    } else {
+      users.push({ deviceId, lastName: name });
+    }
+
+    localStorage.setItem('users', JSON.stringify(users));
+
     try {
-      await this.backend.reserveItem(this.item.id, name, deviceId);
+      this.backend.reserveItem(this.item.id, name, deviceId);
       this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });
       this.dialogRef.close(true);
     } catch (err) {

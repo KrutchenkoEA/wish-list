@@ -1,15 +1,16 @@
 // src/app/features/admin-panel/admin-panel.component.ts
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MockBackendService } from '../../../services/mock-backend.service';
 import { Item } from '../../../models/item.model';
 import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-item-dialog.component';
 import { MatChip } from '@angular/material/chips';
+import { FirebaseService } from '../../../services/firebase.service';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-admin-panel',
@@ -22,29 +23,36 @@ import { MatChip } from '@angular/material/chips';
     MatSnackBarModule,
     DragDropModule,
     MatChip,
+    MatProgressSpinner,
   ],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminPanelComponent implements OnInit {
-  private backend = inject(MockBackendService);
+export class AdminPanelComponent {
+  private backend = inject(FirebaseService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
 
+  readonly loading = signal(true);
   readonly items = signal<Item[]>([]);
 
-  readonly reservedItems = computed(() => this.items().filter(i => i.reservedBy));
-  readonly availableItems = computed(() => this.items().filter(i => !i.reservedBy));
-
-  ngOnInit(): void {
-    this.loadItems();
+  constructor() {
+    effect(() => {
+      this.loading.set(true);
+      this.backend.getItems().subscribe({
+        next: (items) => {
+          this.items.set(items);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.items.set([]);
+          this.loading.set(false);
+        },
+      });
+    });
   }
 
-  async loadItems() {
-    const all = await this.backend.getItems();
-    this.items.set(all);
-  }
 
   openAddDialog(): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
@@ -56,7 +64,6 @@ export class AdminPanelComponent implements OnInit {
       if (result) {
         await this.backend.addItem(result);
         this.snackBar.open('Подарок добавлен!', 'Ок', { duration: 2000 });
-        this.loadItems();
       }
     });
   }
@@ -71,7 +78,6 @@ export class AdminPanelComponent implements OnInit {
       if (result) {
         await this.backend.updateItem(result);
         this.snackBar.open('Подарок обновлён!', 'Ок', { duration: 2000 });
-        this.loadItems();
       }
     });
   }
@@ -79,13 +85,11 @@ export class AdminPanelComponent implements OnInit {
   async deleteItem(itemId: string) {
     await this.backend.deleteItem(itemId);
     this.snackBar.open('Подарок удалён', 'Ок', { duration: 2000 });
-    this.loadItems();
   }
 
-  async cancelReservation(itemId: string) {
-    await this.backend.cancelReservation(itemId);
+  async cancelReservation(itemId: string, deviceId: string) {
+    await this.backend.cancelReservation(itemId, deviceId);
     this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
-    this.loadItems();
   }
 
   drop(event: CdkDragDrop<Item[]>): void {

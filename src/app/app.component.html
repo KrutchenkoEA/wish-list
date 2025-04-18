@@ -8,6 +8,8 @@
   </div>
   <span class="spacer"></span>
 
+  <p class="device">deviceId: {{fingerprintService.getDeviceId()}}</p>
+
   <button (click)="toggleTheme()" [matTooltip]="currentTheme() === 'dark' ? 'Светлая тема' : 'Тёмная тема'"
           mat-icon-button>
     <mat-icon>{{ currentTheme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
@@ -22,7 +24,6 @@
       <mat-icon>lock</mat-icon>
     </button>
   }
-
 </mat-toolbar>
 
 <router-outlet />
