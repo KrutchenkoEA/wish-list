@@ -9,7 +9,7 @@
       }
     </mat-form-field>
     <div mat-dialog-actions>
-      <button (click)="dialogRef.close()" mat-button>Отмена</button>
+      <button (click)="dialogRef.close()" type="reset" mat-button>Отмена</button>
       <button [disabled]="nameControl.invalid" color="primary" mat-raised-button type="submit">Забронировать
       </button>
     </div>

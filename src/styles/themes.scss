@@ -11,20 +11,20 @@ $light-theme: (
     brand-family: Roboto,
   ),
   density: (
-    scale :0
+    scale: 0
   ),
 );
 
 $dark-theme: (
   color: (
     theme-type: dark,
-    primary: mat.$violet-palette,
+    primary: mat.$azure-palette,
   ),
   typography: (
     brand-family: Roboto,
   ),
   density: (
-    scale :0
+    scale: 0
   ),
 );
 
