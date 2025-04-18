@@ -1,10 +1,10 @@
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Item } from '../../models/item.model';
 import { MockBackendService } from '../../services/mock-backend.service';
@@ -24,17 +24,25 @@ import { FingerprintService } from '../../services/fingetprint.service';
   ],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReservationComponent {
+export class ReservationComponent implements OnInit {
   @Input() item!: Item;
 
-  nameControl = new FormControl('', Validators.required);
   dialogRef = inject(MatDialogRef);
   private backend = inject(MockBackendService);
   private fingerprint = inject(FingerprintService);
   private snackBar = inject(MatSnackBar);
 
   storedName: string | null = null;
+
+  formGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+  });
+
+  get nameControl() {
+    return this.formGroup.controls.name;
+  }
 
   async ngOnInit() {
     const deviceId = await this.fingerprint.getDeviceIdAsync();

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
-import { inject } from '@angular/core';
-import { AuthService } from './services/auth.service';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -9,8 +8,8 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [() => inject(AuthService).isAdmin()],
-    loadComponent: () => import('./components/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
+    canActivate: [adminGuard],
+    loadComponent: () => import('./components/admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
   },
   {
     path: '**',

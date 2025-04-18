@@ -1,9 +1,10 @@
-<div *ngIf="loading()" class="spinner-container">
-  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</div>
+@if (loading()) {
+  <div class="spinner-container">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+} @else {
+  @for (item of activeItems(); track item.id) {
+    <app-item-card class="card" [item]="item"></app-item-card>
+  }
+}
 
-<mat-grid-list cols="1" gutterSize="10px" rowHeight="fit" class="grid-list" *ngIf="!loading()">
-  <mat-grid-tile *ngFor="let item of activeItems()">
-    <app-item-card [item]="item"></app-item-card>
-  </mat-grid-tile>
-</mat-grid-list>

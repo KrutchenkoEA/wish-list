@@ -2,24 +2,26 @@
 <mat-dialog-content [formGroup]="form">
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
-    <input matInput formControlName="title" />
-    <mat-error *ngIf="form.controls['title'].invalid">Обязательное поле</mat-error>
+    <input formControlName="title" matInput />
+    @if (form.controls['title'].invalid) {
+      <mat-error>Обязательное поле</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Описание</mat-label>
-    <textarea matInput formControlName="description"></textarea>
+    <textarea formControlName="description" matInput></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Ссылка на подарок</mat-label>
-    <input matInput formControlName="link" />
+    <input formControlName="link" matInput />
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()">Отмена</button>
-  <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">
+  <button (click)="cancel()" mat-button>Отмена</button>
+  <button (click)="save()" [disabled]="form.invalid" color="primary" mat-raised-button>
     {{ data ? 'Сохранить' : 'Добавить' }}
   </button>
 </mat-dialog-actions>

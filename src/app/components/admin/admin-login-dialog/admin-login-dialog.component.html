@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Вход в админку</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="submit()" [formGroup]="formGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Пароль</mat-label>
+      <input [formControl]="passwordControl" matInput type="password" />
+      <mat-error *ngIf="passwordControl.invalid">Пароль обязателен</mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button (click)="dialogRef.close()" mat-button>Отмена</button>
+      <button [disabled]="passwordControl.invalid" color="primary" mat-raised-button type="submit">
+        Войти
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

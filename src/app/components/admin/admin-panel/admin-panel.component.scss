@@ -1,7 +1,10 @@
 .admin-actions {
-  margin-bottom: 20px;
   display: flex;
-  justify-content: flex-end;
+
+  button {
+    width: 100%;
+    margin: 2rem;
+  }
 }
 
 .admin-section {

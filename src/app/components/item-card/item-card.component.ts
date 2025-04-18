@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,14 +12,13 @@ import { ReservationComponent } from '../reservation/reservation.component';
   imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule],
   templateUrl: './item-card.component.html',
   styleUrl: './item-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemCardComponent {
   @Input() item!: Item;
+  private dialog = inject(MatDialog);
 
-  constructor(private dialog: MatDialog) {
-  }
-
-  openReservationDialog() {
+  openReservationDialog(): void {
     this.dialog.open(ReservationComponent, {
       data: { item: this.item },
     });

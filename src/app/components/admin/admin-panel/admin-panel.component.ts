@@ -1,13 +1,13 @@
 // src/app/features/admin-panel/admin-panel.component.ts
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { MockBackendService } from '../../services/mock-backend.service';
-import { Item } from '../../models/item.model';
+import { MockBackendService } from '../../../services/mock-backend.service';
+import { Item } from '../../../models/item.model';
 import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-item-dialog.component';
 
 @Component({
@@ -23,8 +23,9 @@ import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-ite
   ],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminPanelComponent {
+export class AdminPanelComponent implements OnInit {
   private backend = inject(MockBackendService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
@@ -34,7 +35,7 @@ export class AdminPanelComponent {
   readonly reservedItems = computed(() => this.items().filter(i => i.reservedBy));
   readonly availableItems = computed(() => this.items().filter(i => !i.reservedBy));
 
-  constructor() {
+  ngOnInit(): void {
     this.loadItems();
   }
 
@@ -43,7 +44,7 @@ export class AdminPanelComponent {
     this.items.set(all);
   }
 
-  openAddDialog() {
+  openAddDialog(): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: null,
       width: '400px',
@@ -58,7 +59,7 @@ export class AdminPanelComponent {
     });
   }
 
-  openEditDialog(item: Item) {
+  openEditDialog(item: Item): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: item,
       width: '400px',
@@ -85,7 +86,7 @@ export class AdminPanelComponent {
     this.loadItems();
   }
 
-  drop(event: CdkDragDrop<Item[]>) {
+  drop(event: CdkDragDrop<Item[]>): void {
     const updated = [...this.items()];
     moveItemInArray(updated, event.previousIndex, event.currentIndex);
     this.items.set(updated);

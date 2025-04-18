@@ -1,14 +1,16 @@
 <h1 mat-dialog-title>Бронирование подарка</h1>
 <mat-dialog-content>
-  <form [formControl]="nameControl">
+  <form (ngSubmit)="reserve()" [formGroup]="formGroup">
     <mat-form-field appearance="fill">
       <mat-label>Ваше имя</mat-label>
-      <input [formControl]="nameControl" [value]="storedName" matInput placeholder="Введите имя" />
-      <mat-error *ngIf="nameControl.invalid">Имя обязательно</mat-error>
+      <input [value]="storedName" matInput placeholder="Введите имя" />
+      @if (nameControl.invalid) {
+        <mat-error>Имя обязательно</mat-error>
+      }
     </mat-form-field>
     <div mat-dialog-actions>
       <button (click)="dialogRef.close()" mat-button>Отмена</button>
-      <button (click)="reserve()" [disabled]="nameControl.invalid" color="primary" mat-raised-button>Забронировать
+      <button [disabled]="nameControl.invalid" color="primary" mat-raised-button type="submit">Забронировать
       </button>
     </div>
   </form>

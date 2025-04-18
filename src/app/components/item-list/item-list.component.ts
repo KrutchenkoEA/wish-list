@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,19 +11,21 @@ import { ItemCardComponent } from '../item-card/item-card.component';
   standalone: true,
   imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent],
   templateUrl: './item-list.component.html',
-  styleUrl: './item-list.component.scss'
+  styleUrl: './item-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemListComponent {
+export class ItemListComponent implements OnInit {
   private backend = inject(MockBackendService);
 
   readonly loading = signal(true);
   readonly items = signal<Item[]>([]);
 
   readonly activeItems = computed(() =>
-    this.items().filter(item => item.isActive)
+    this.items().filter(item => item.isActive),
   );
 
-  constructor() {
+
+  ngOnInit(): void {
     this.loadItems();
   }
 

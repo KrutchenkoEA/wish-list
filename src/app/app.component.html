@@ -1,11 +1,27 @@
 <mat-toolbar class="toolbar" color="primary">
-  <span class="logo">🎁 Лист желаний</span>
+  <div>
+    <span class="logo" routerLink="">🎁</span>
+    <span class="tab" routerLink="">Лист желаний</span>
+    @if (isAdmin()) {
+      <span class="tab" routerLink="/admin">Админ</span>
+    }
+  </div>
   <span class="spacer"></span>
 
   <button (click)="toggleTheme()" [matTooltip]="currentTheme() === 'dark' ? 'Светлая тема' : 'Тёмная тема'"
           mat-icon-button>
     <mat-icon>{{ currentTheme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
+
+  @if (isAdmin()) {
+    <button (click)="logoutAdmin()" mat-icon-button matTooltip="Выйти из админки">
+      <mat-icon>logout</mat-icon>
+    </button>
+  } @else {
+    <button (click)="loginAsAdmin()" mat-icon-button matTooltip="Войти в админку">
+      <mat-icon>lock</mat-icon>
+    </button>
+  }
 
 </mat-toolbar>
 

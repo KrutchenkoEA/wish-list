@@ -2,8 +2,12 @@
   <mat-card-title>{{ item.title }}</mat-card-title>
   <mat-card-content>
     <p>{{ item.description }}</p>
-    <a *ngIf="item.link" href="{{ item.link }}" target="_blank">Ссылка на подарок</a>
-    <p *ngIf="item.reservedBy">Забронировано: {{ item.reservedBy }}</p>
+    @if (item.link) {
+      <a href="{{ item.link }}" target="_blank">Ссылка на подарок</a>
+    }
+    @if (item.reservedBy) {
+      <p>Забронировано: {{ item.reservedBy }}</p>
+    }
   </mat-card-content>
   <mat-card-actions>
     <button (click)="openReservationDialog()" [disabled]="!!item.reservedBy" color="primary" mat-raised-button>

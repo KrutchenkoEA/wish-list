@@ -1,12 +1,12 @@
 // src/app/features/admin-panel/dialogs/add-edit-item-dialog.component.ts
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Item } from '../../models/item.model';
+import { Item } from '../../../models/item.model';
 
 @Component({
   selector: 'app-add-edit-item-dialog',
@@ -21,6 +21,7 @@ import { Item } from '../../models/item.model';
   ],
   templateUrl: './add-edit-item-dialog.component.html',
   styleUrl: './add-edit-item-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddEditItemDialogComponent {
   form: FormGroup;
@@ -45,7 +46,7 @@ export class AddEditItemDialogComponent {
     }
   }
 
-  save() {
+  save(): void {
     if (this.form.invalid) return;
     const updated: Item = {
       ...this.data,
@@ -57,7 +58,7 @@ export class AddEditItemDialogComponent {
     this.dialogRef.close(updated);
   }
 
-  cancel() {
+  cancel(): void {
     this.dialogRef.close();
   }
 }
