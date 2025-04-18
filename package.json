@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "copy404": "node ./src/scripts/copy-index.js"
   },
   "private": true,
   "dependencies": {
