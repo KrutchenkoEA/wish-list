@@ -1,4 +1,3 @@
-// src/app/features/admin-panel/admin-panel.component.ts
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -53,17 +52,17 @@ export class AdminPanelComponent {
     });
   }
 
-
   openAddDialog(): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: null,
-      width: '400px',
+      width: '480px',
     });
 
-    ref.afterClosed().subscribe(async result => {
+    ref.afterClosed().subscribe(result => {
       if (result) {
-        await this.backend.addItem(result);
-        this.snackBar.open('Подарок добавлен!', 'Ок', { duration: 2000 });
+        this.backend.addItem(result).pipe().subscribe(() => {
+          this.snackBar.open('Подарок добавлен!', 'Ок', { duration: 2000 });
+        });
       }
     });
   }
@@ -71,25 +70,28 @@ export class AdminPanelComponent {
   openEditDialog(item: Item): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: item,
-      width: '400px',
+      width: '480px',
     });
 
-    ref.afterClosed().subscribe(async result => {
+    ref.afterClosed().subscribe(result => {
       if (result) {
-        await this.backend.updateItem(result);
-        this.snackBar.open('Подарок обновлён!', 'Ок', { duration: 2000 });
+        this.backend.updateItem(item).pipe().subscribe(() => {
+          this.snackBar.open('Подарок обновлён!', 'Ок', { duration: 2000 });
+        });
       }
     });
   }
 
-  async deleteItem(itemId: string) {
-    await this.backend.deleteItem(itemId);
-    this.snackBar.open('Подарок удалён', 'Ок', { duration: 2000 });
+  deleteItem(itemId: string): void {
+    this.backend.deleteItem(itemId).pipe().subscribe(() => {
+      this.snackBar.open('Подарок удалён', 'Ок', { duration: 2000 });
+    });
   }
 
-  async cancelReservation(itemId: string, deviceId: string) {
-    await this.backend.cancelReservation(itemId, deviceId);
-    this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
+  cancelReservation(itemId: string, deviceId: string): void {
+    this.backend.cancelReservation(itemId, deviceId).pipe().subscribe(() => {
+      this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
+    });
   }
 
   drop(event: CdkDragDrop<Item[]>): void {

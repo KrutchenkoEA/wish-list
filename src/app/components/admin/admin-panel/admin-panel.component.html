@@ -22,6 +22,9 @@
             }
           </mat-card-title>
           <mat-card-content>
+            @if (item.imageData) {
+              <img [src]="item.imageData" alt="Изображение подарка" mat-card-image />
+            }
             <p>{{ item.description }}</p>
             @if (item.link) {
               <a href="{{ item.link }}" target="_blank">Ссылка</a>

@@ -31,11 +31,24 @@
 }
 
 .item-card {
-  margin-bottom: 10px;
+  width: 80%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
   cursor: move;
 
   span {
     font-weight: bold;
+  }
+
+  img {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 4px;
   }
 }
 

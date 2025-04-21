@@ -7,4 +7,5 @@ export interface Item {
   reservedAt?: number;
   isActive: boolean;
   reservedDeviceId?: string;
+  imageData?: string;
 }

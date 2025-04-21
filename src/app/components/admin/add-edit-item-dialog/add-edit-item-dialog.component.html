@@ -1,5 +1,7 @@
 <h1 mat-dialog-title>{{ data ? 'Редактировать подарок' : 'Добавить подарок' }}</h1>
 <mat-dialog-content [formGroup]="form">
+  <mat-checkbox formControlName="isActive">Активен</mat-checkbox>
+
   <mat-form-field appearance="fill">
     <mat-label>Название</mat-label>
     <input formControlName="title" matInput />
@@ -18,10 +20,20 @@
     <input formControlName="link" matInput />
   </mat-form-field>
 
-  <mat-checkbox formControlName="isActive">Активен</mat-checkbox>
+  <input (change)="onFileSelected($event)" accept="image/jpeg, image/png, image/webp" type="file" />
+
+  @if (uploading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
+
+  @if (form.value.imageData) {
+    <img [src]="form.value.imageData" alt="Изображение подарка" class="image-preview" />
+  }
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <button (click)="removeImage()" [disabled]="!form.value.imageData" mat-button type="reset">Удалить изображение
+  </button>
   <button (click)="cancel()" mat-button type="reset">Отмена</button>
   <button (click)="save()" [disabled]="form.invalid" color="primary" mat-raised-button type="submit">
     {{ data ? 'Сохранить' : 'Добавить' }}
