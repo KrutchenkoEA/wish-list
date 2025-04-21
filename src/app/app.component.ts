@@ -38,7 +38,7 @@ export class AppComponent {
       .subscribe(password => {
         if (!password) return;
 
-        if (password === 'secret') {
+        if (btoa(unescape(encodeURIComponent(password))) === 'c2VjcmV0') {
           this.auth.enableAdminMode();
           this.router.navigate(['/admin']);
         } else {
