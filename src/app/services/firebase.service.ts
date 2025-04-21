@@ -12,12 +12,10 @@ import {
 import { Item } from '../models/item.model';
 import { v4 as uuidv4 } from 'uuid';
 import { Observable } from 'rxjs';
-import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   private firestore = inject(Firestore);
-  private storage = getStorage();
   private itemsRef = collection(this.firestore, 'items');
 
   getItems() {
@@ -45,7 +43,7 @@ export class FirebaseService {
       reservedBy: item.reservedBy ?? null,
       reservedAt: Date.now(),
       reservedDeviceId: item.reservedDeviceId ?? null,
-      imageData: item.imageData ?? null
+      imageData: item.imageData ?? null,
     });
   }
 
