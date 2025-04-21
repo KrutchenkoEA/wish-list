@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /wishlist/",
+    "build": "ng build --base-href /wish-list/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "copy404": "node ./src/scripts/copy-index.js"
