@@ -57,7 +57,7 @@ export class AdminPanelComponent {
   openAddDialog(): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: null,
-      width: '400px',
+      width: '480px',
     });
 
     ref.afterClosed().subscribe(async result => {
@@ -71,7 +71,7 @@ export class AdminPanelComponent {
   openEditDialog(item: Item): void {
     const ref = this.dialog.open(AddEditItemDialogComponent, {
       data: item,
-      width: '400px',
+      width: '480px',
     });
 
     ref.afterClosed().subscribe(async result => {
