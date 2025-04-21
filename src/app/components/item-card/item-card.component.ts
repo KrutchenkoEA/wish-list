@@ -16,6 +16,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 export class ItemCardComponent {
   @Input() item!: Item;
   @Input() deviceId!: string;
-  @Output() openReservation = new EventEmitter();
-  @Output() cancelReservation = new EventEmitter();
+  @Output() openReservation = new EventEmitter<Item>();
+  @Output() cancelReservation = new EventEmitter<Item>();
 }
