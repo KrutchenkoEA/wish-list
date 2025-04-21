@@ -75,12 +75,14 @@ export class ReservationComponent implements OnInit {
 
     localStorage.setItem('users', JSON.stringify(users));
 
-    try {
-      this.backend.reserveItem(this.item.id, name, deviceId);
-      this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });
-      this.dialogRef.close(true);
-    } catch (err) {
-      this.snackBar.open('Ошибка: Подарок уже забронирован.', 'Закрыть', { duration: 3000 });
-    }
+    this.backend.reserveItem(this.item.id, name, deviceId).pipe().subscribe({
+      next: () => {
+        this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });
+        this.dialogRef.close(true);
+      },
+      error: () => {
+        this.snackBar.open('Ошибка: Подарок уже забронирован.', 'Закрыть', { duration: 3000 });
+      },
+    });
   }
 }

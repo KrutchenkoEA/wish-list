@@ -11,71 +11,83 @@ import {
 } from '@angular/fire/firestore';
 import { Item } from '../models/item.model';
 import { v4 as uuidv4 } from 'uuid';
-import { Observable } from 'rxjs';
+import { from, Observable, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   private firestore = inject(Firestore);
   private itemsRef = collection(this.firestore, 'items');
 
-  getItems() {
+  getItems(): Observable<Item[]> {
     return collectionData(this.itemsRef, { idField: 'id' }) as unknown as Observable<Item[]>;
   }
 
-  async addItem(item: Item): Promise<void> {
+  addItem(item: Item): Observable<void> {
     const newItem: Item = { ...item, id: item.id || uuidv4() };
     const docRef = doc(this.itemsRef, newItem.id);
-    await setDoc(docRef, newItem);
+    return from(setDoc(docRef, newItem));
   }
 
-  async deleteItem(itemId: string): Promise<void> {
+  deleteItem(itemId: string): Observable<void> {
     const docRef = doc(this.itemsRef, itemId);
-    await deleteDoc(docRef);
+    return from(deleteDoc(docRef));
   }
 
-  async updateItem(item: Item): Promise<void> {
+  updateItem(item: Item): Observable<void> {
     const docRef = doc(this.itemsRef, item.id);
-    await updateDoc(docRef, {
-      title: item.title,
-      description: item.description,
-      link: item.link,
-      isActive: item.isActive,
-      reservedBy: item.reservedBy ?? null,
-      reservedAt: Date.now(),
-      reservedDeviceId: item.reservedDeviceId ?? null,
-      imageData: item.imageData ?? null,
-    });
+    return from(
+      updateDoc(docRef, {
+        title: item.title,
+        description: item.description,
+        link: item.link,
+        isActive: item.isActive,
+        reservedBy: item.reservedBy ?? null,
+        reservedAt: Date.now(),
+        reservedDeviceId: item.reservedDeviceId ?? null,
+        imageData: item.imageData ?? null,
+      }),
+    );
   }
 
-  async reserveItem(itemId: string, name: string, deviceId: string): Promise<void> {
+  reserveItem(itemId: string, name: string, deviceId: string): Observable<void> {
     const docRef = doc(this.itemsRef, itemId);
-    const snapshot = await getDoc(docRef);
-    const item = snapshot.data() as Item;
+    return from(getDoc(docRef)).pipe(
+      switchMap((snapshot) => {
+        const item = snapshot.data() as Item;
 
-    if (item?.reservedBy && item?.reservedDeviceId !== deviceId) {
-      throw new Error('Item already reserved');
-    }
+        if (item?.reservedBy && item?.reservedDeviceId !== deviceId) {
+          throw new Error('Item already reserved');
+        }
 
-    await updateDoc(docRef, {
-      reservedBy: name,
-      reservedAt: Date.now(),
-      reservedDeviceId: deviceId,
-    });
+        return from(
+          updateDoc(docRef, {
+            reservedBy: name,
+            reservedAt: Date.now(),
+            reservedDeviceId: deviceId,
+          }),
+        );
+      }),
+    );
   }
 
-  async cancelReservation(itemId: string, deviceId: string): Promise<void> {
+  cancelReservation(itemId: string, deviceId: string): Observable<void> {
     const docRef = doc(this.itemsRef, itemId);
-    const snapshot = await getDoc(docRef);
-    const item = snapshot.data() as Item;
+    return from(getDoc(docRef)).pipe(
+      switchMap((snapshot) => {
+        const item = snapshot.data() as Item;
 
-    if (item?.reservedDeviceId === deviceId) {
-      await updateDoc(docRef, {
-        reservedAt: null,
-        reservedBy: null,
-        reservedDeviceId: null,
-      });
-    } else {
-      throw new Error('You are not allowed to cancel this reservation');
-    }
+        if (item?.reservedDeviceId === deviceId) {
+          return from(
+            updateDoc(docRef, {
+              reservedAt: null,
+              reservedBy: null,
+              reservedDeviceId: null,
+            }),
+          );
+        } else {
+          throw new Error('You are not allowed to cancel this reservation');
+        }
+      }),
+    );
   }
 }

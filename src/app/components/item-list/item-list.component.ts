@@ -48,9 +48,10 @@ export class ItemListComponent {
     });
   }
 
-  async cancelReservation(item: Item) {
-    await this.backend.cancelReservation(item.id, this.deviceId);
-    this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
+  cancelReservation(itemId: string, deviceId: string): void {
+    this.backend.cancelReservation(itemId, deviceId).pipe().subscribe(() => {
+      this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
+    });
   }
 
   openReservation(item: Item): void {
