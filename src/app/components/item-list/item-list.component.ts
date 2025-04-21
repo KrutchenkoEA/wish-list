@@ -48,8 +48,8 @@ export class ItemListComponent {
     });
   }
 
-  cancelReservation(itemId: string, deviceId: string): void {
-    this.backend.cancelReservation(itemId, deviceId).pipe().subscribe(() => {
+  cancelReservation(item: Item): void {
+    this.backend.cancelReservation(item.id, item.reservedDeviceId).pipe().subscribe(() => {
       this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
     });
   }
