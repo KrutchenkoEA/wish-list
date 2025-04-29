@@ -75,7 +75,7 @@ export class AdminPanelComponent {
 
     ref.afterClosed().subscribe(result => {
       if (result) {
-        this.backend.updateItem(item).pipe().subscribe(() => {
+        this.backend.updateItem({ ...item, ...result }).pipe().subscribe(() => {
           this.snackBar.open('Подарок обновлён!', 'Ок', { duration: 2000 });
         });
       }
@@ -95,8 +95,15 @@ export class AdminPanelComponent {
   }
 
   drop(event: CdkDragDrop<Item[]>): void {
-    const updated = [...this.items()];
-    moveItemInArray(updated, event.previousIndex, event.currentIndex);
-    this.items.set(updated);
+    const currentItems = [...this.items()];
+
+    moveItemInArray(currentItems, event.previousIndex, event.currentIndex);
+
+    currentItems.forEach((item, index) => {
+      item.sortOrder = index;
+      this.backend.updateItem({ ...item, sortOrder: item.sortOrder });
+    });
+
+    this.items.set(currentItems);
   }
 }

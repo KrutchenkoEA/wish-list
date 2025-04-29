@@ -20,6 +20,11 @@
     <input formControlName="link" matInput />
   </mat-form-field>
 
+  <mat-form-field appearance="fill">
+    <mat-label>Порядок сортировки</mat-label>
+    <input matInput type="number" formControlName="sortOrder" />
+  </mat-form-field>
+
   <input (change)="onFileSelected($event)" accept="image/jpeg, image/png, image/webp" type="file" />
 
   @if (uploading) {

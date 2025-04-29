@@ -6,6 +6,8 @@ import {
   doc,
   Firestore,
   getDoc,
+  orderBy,
+  query,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -19,7 +21,8 @@ export class FirebaseService {
   private itemsRef = collection(this.firestore, 'items');
 
   getItems(): Observable<Item[]> {
-    return collectionData(this.itemsRef, { idField: 'id' }) as unknown as Observable<Item[]>;
+    const sortedQuery = query(this.itemsRef, orderBy('sortOrder', 'asc'));
+    return collectionData(sortedQuery, { idField: 'id' }) as Observable<Item[]>;
   }
 
   addItem(item: Item): Observable<void> {
@@ -45,6 +48,7 @@ export class FirebaseService {
         reservedAt: Date.now(),
         reservedDeviceId: item.reservedDeviceId ?? null,
         imageData: item.imageData ?? null,
+        sortOrder: item.sortOrder ?? null,
       }),
     );
   }

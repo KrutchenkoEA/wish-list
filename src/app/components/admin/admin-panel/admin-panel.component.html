@@ -11,12 +11,10 @@
     <h2>Все подарки</h2>
     <div (cdkDropListDropped)="drop($event)" cdkDropList>
       @for (item of items(); track i; let i = $index) {
-        <mat-card
-          cdkDrag
-          class="item-card"
-          [class.item-card_disabled]="!item.isActive"
-        >
-          <mat-card-title>{{ item.title }}
+        <mat-card cdkDrag class="item-card">
+          <div class="item-card__number">{{ item?.sortOrder }}</div>
+          <mat-card-title>
+            {{ item.title }}
             @if (!item.isActive) {
               <mat-chip>Не активен</mat-chip>
             }
