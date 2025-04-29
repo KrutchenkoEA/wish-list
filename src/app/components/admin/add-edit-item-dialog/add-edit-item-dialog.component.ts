@@ -44,6 +44,7 @@ export class AddEditItemDialogComponent implements OnInit {
       link: [''],
       isActive: [true],
       imageData: [''],
+      sortOrder: [0],
     });
     if (this.data) {
       this.form.patchValue({
@@ -52,6 +53,7 @@ export class AddEditItemDialogComponent implements OnInit {
         link: this.data.link,
         isActive: this.data.isActive ?? true,
         imageData: this.data.imageData,
+        sortOrder: this.data?.sortOrder ?? null,
       });
     }
   }

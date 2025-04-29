@@ -8,4 +8,5 @@ export interface Item {
   isActive: boolean;
   reservedDeviceId?: string;
   imageData?: string;
+  sortOrder?: number;
 }
