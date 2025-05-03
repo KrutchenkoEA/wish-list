@@ -1,6 +1,6 @@
 :host {
   display: block;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .toolbar {
@@ -8,6 +8,11 @@
   top: 0;
   z-index: 1000;
   background-color: var(--mat-sys-tertiary);
+
+  &__menu {
+    display: flex;
+    overflow: auto;
+  }
 }
 
 .spacer {
