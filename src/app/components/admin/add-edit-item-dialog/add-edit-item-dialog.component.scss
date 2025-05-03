@@ -11,17 +11,15 @@ mat-form-field {
   object-fit: contain;
 }
 
-
 @media (max-width: 600px) {
   mat-dialog-actions {
     button {
-      font-size: 0.75rem;
-      height: 20px;
+      font-size: 0.85rem;
     }
   }
 
   mat-dialog-content {
-    max-height: 50dvh;
+    max-height: 55dvh;
   }
 }
 
