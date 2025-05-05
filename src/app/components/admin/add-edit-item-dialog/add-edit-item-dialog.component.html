@@ -18,6 +18,9 @@
   <mat-form-field appearance="fill">
     <mat-label>Ссылка на подарок</mat-label>
     <input formControlName="link" matInput />
+    <mat-error *ngIf="form.get('link')?.hasError('pattern')">
+      Введите корректную ссылку, начиная с http:// или https://
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

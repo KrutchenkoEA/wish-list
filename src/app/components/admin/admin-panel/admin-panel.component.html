@@ -30,9 +30,6 @@
               <img [src]="item.imageData" alt="Изображение подарка" mat-card-image />
             }
             <p>{{ item.description }}</p>
-            @if (item.link) {
-              <a href="{{ item.link }}" target="_blank">Ссылка</a>
-            }
             @if (item.reservedBy) {
               <p><span>Забронировано:</span> {{ item.reservedBy }}, {{ item.reservedAt | date: 'dd.MM.yyyy HH:mm:ss' }}
               </p>
@@ -40,6 +37,9 @@
             }
           </mat-card-content>
           <mat-card-actions>
+            @if (item.link) {
+              <button mat-button><a href="{{ item.link }}" target="_blank">Посмотреть ссылку</a></button>
+            }
             <button (click)="openEditDialog(item)" mat-button>Редактировать</button>
             <button (click)="deleteItem(item.id)" color="warn" mat-button>Удалить</button>
             @if (item.reservedBy) {
