@@ -16,9 +16,9 @@
       @for (item of items(); track i; let i = $index) {
         <app-admin-item-card cdkDrag
                              [item]="item"
+                             [expanded]="isExpanded()"
                              (openEditDialog)="openEditDialog($event)"
                              (deleteItem)="deleteItem($event)"
-                             [expanded]="isExpanded()"
                              (cancelReservation)="cancelReservation($event)">
           <div cdkDragHandle class="drag-handle">
             <svg fill="currentColor" viewBox="0 0 24 24" width="24px">

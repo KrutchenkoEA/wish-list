@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,10 +34,18 @@ export class AddEditItemDialogComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private cdr = inject(ChangeDetectorRef);
   private dialogRef = inject<MatDialogRef<AddEditItemDialogComponent>>(MatDialogRef);
+  private canUnload = false;
 
   data = inject<Item | null>(MAT_DIALOG_DATA);
   form: FormGroup;
   uploading = false;
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: BeforeUnloadEvent): void {
+    if (!this.canUnload && this.form?.dirty) {
+      event.preventDefault();
+    }
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -79,10 +87,12 @@ export class AddEditItemDialogComponent implements OnInit {
       reservedBy: this.data?.reservedBy ?? null,
       id: this.data?.id ?? crypto.randomUUID(),
     };
+    this.canUnload = true;
     this.dialogRef.close(updated);
   }
 
   cancel(): void {
+    this.canUnload = true;
     this.dialogRef.close();
   }
 

@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChip } from '@angular/material/chips';
-import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-admin-item-card',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatChip, CdkDrag, CdkDragHandle],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatChip],
   templateUrl: './admin-item-card.component.html',
   standalone: true,
   styleUrl: './admin-item-card.component.scss',
