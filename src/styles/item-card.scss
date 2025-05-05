@@ -14,18 +14,40 @@
   .image-wrapper {
     height: auto;
     max-height: 70vh;
-    max-width: 70vw;
-    min-height: 360px;
+    max-width: 90vw;
     overflow: hidden;
     border-radius: 8px;
     align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 3 / 4;
   }
 
   img {
-    object-fit: cover;
+    object-fit: contain;
     height: auto;
     width: 100%;
     max-width: 720px;
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    .image-wrapper {
+      max-height: 50vh;
+      max-width: 100%;
+    }
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .image-wrapper {
+      max-height: 60vh;
+      max-width: 80vw;
+    }
   }
 
   &_clickable {
