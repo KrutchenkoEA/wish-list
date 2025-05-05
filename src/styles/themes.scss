@@ -38,6 +38,9 @@ $dark-theme: (
 @mixin dark-theme-mixin() {
   @include mat.theme($dark-theme);
   @include mat.all-component-themes(mat.define-theme($dark-theme));
+  @include mat.theme-overrides((
+    tertiary: #7ea7fb,
+  ));
   background-color: #22262f;
   color: white;
 }
