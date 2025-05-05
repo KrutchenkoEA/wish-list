@@ -5,15 +5,20 @@
 } @else {
   <div class="admin-actions">
     <button (click)="openAddDialog()" color="primary" mat-raised-button>Добавить карточку</button>
+    <button (click)="isExpanded.set(!isExpanded())" color="primary"
+            mat-raised-button>{{ isExpanded() ? 'Свернуть все' : 'Развернуть все' }}
+    </button>
   </div>
 
   <div class="admin-section">
     <h2>Все подарки</h2>
     <div (cdkDropListDropped)="drop($event)" cdkDropList>
       @for (item of items(); track i; let i = $index) {
-        <app-admin-item-card cdkDrag [item]="item"
+        <app-admin-item-card cdkDrag
+                             [item]="item"
                              (openEditDialog)="openEditDialog($event)"
                              (deleteItem)="deleteItem($event)"
+                             [expanded]="isExpanded()"
                              (cancelReservation)="cancelReservation($event)">
           <div cdkDragHandle class="drag-handle">
             <svg fill="currentColor" viewBox="0 0 24 24" width="24px">

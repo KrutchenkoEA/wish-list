@@ -19,4 +19,22 @@ export class AdminItemCardComponent {
   @Output() openEditDialog = new EventEmitter<Item>();
   @Output() deleteItem = new EventEmitter<string>();
   @Output() cancelReservation = new EventEmitter<Item>();
+
+  private _expanded!: boolean;
+  public cardExpanded!: boolean;
+
+  @Input('expanded') set expanded(value: boolean) {
+    this._expanded = value;
+    this.cardExpanded = value;
+  }
+
+  get expanded() {
+    return this._expanded;
+  }
+
+  expand(): void {
+    if (!this.expanded) {
+      this.cardExpanded = !this.cardExpanded;
+    }
+  }
 }

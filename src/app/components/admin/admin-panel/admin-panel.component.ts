@@ -39,6 +39,7 @@ export class AdminPanelComponent {
 
   readonly loading = signal(true);
   readonly items = signal<Item[]>([]);
+  readonly isExpanded = signal(true);
 
   constructor() {
     effect(() => {

@@ -3,7 +3,7 @@
   flex-direction: column;
   height: calc(100dvh - 65px);
   width: 100%;
-  padding: 2rem;
+  padding: 1rem;
   gap: 1rem;
   overflow: auto;
 }
@@ -13,5 +13,6 @@
   justify-content: center;
   align-items: center;
   min-height: 200px;
+  height: 60dvh;
   width: 100%;
 }
