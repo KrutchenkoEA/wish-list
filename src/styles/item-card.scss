@@ -11,12 +11,20 @@
     font-weight: bold;
   }
 
+  .image-wrapper {
+    height: auto;
+    max-height: 70vh;
+    max-width: 70vw;
+    overflow: hidden;
+    border-radius: 8px;
+    align-self: center;
+  }
+
   img {
     object-fit: cover;
-    height: 200px;
+    height: auto;
     width: 100%;
-    max-width: 400px;
-    border-radius: 4px;
+    max-width: 720px;
   }
 }
 
@@ -37,6 +45,7 @@ mat-card-content {
 mat-card-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.2rem;
 }
