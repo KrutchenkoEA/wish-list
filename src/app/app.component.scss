@@ -33,12 +33,13 @@
   }
 }
 
-@media (max-width: 300px) {
+@media (max-width: 420px) {
   mat-toolbar {
     overflow: auto;
   }
   .tab, logo {
     font-size: 1rem;
+    padding: 0.25rem 0.5rem;
   }
 }
 

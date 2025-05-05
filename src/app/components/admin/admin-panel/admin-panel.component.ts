@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Item } from '../../../models/item.model';
 import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-item-dialog.component';
-import { MatChip } from '@angular/material/chips';
 import { FirebaseService } from '../../../services/firebase.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AdminItemCardComponent } from '../admin-item-card/admin-item-card.component';
@@ -18,15 +16,12 @@ import { ItemCardComponent } from '../../item-card/item-card.component';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
     DragDropModule,
-    MatChip,
     MatProgressSpinner,
     AdminItemCardComponent,
-    ItemCardComponent,
   ],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
@@ -39,6 +34,7 @@ export class AdminPanelComponent {
 
   readonly loading = signal(true);
   readonly items = signal<Item[]>([]);
+  readonly isExpanded = signal(true);
 
   constructor() {
     effect(() => {
