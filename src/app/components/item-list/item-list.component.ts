@@ -9,6 +9,7 @@ import { FingerprintService } from '../../services/fingetprint.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
+import { log } from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
 
 @Component({
   selector: 'app-item-list',

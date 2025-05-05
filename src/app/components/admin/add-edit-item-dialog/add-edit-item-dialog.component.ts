@@ -10,6 +10,8 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+const URL_REGEXP = /https?:\/\/[^\s]+/;
+
 @Component({
   selector: 'app-add-edit-item-dialog',
   standalone: true,
@@ -41,7 +43,7 @@ export class AddEditItemDialogComponent implements OnInit {
     this.form = this.fb.group({
       title: ['', Validators.required],
       description: [''],
-      link: [''],
+      link: ['', [Validators.pattern(URL_REGEXP)]],
       isActive: [true],
       imageData: [''],
       sortOrder: [0],
@@ -60,9 +62,20 @@ export class AddEditItemDialogComponent implements OnInit {
 
   save(): void {
     if (this.form.invalid) return;
+
+    const { link } = this.form.value;
+    const match = link.match(URL_REGEXP);
+    if (!match) {
+      this.form.get('link')?.setErrors({ pattern: true });
+      return;
+    }
+
+    const fixedUrl = match[0];
+
     const updated: Item = {
       ...this.data,
       ...this.form.value,
+      link: fixedUrl,
       reservedBy: this.data?.reservedBy ?? null,
       id: this.data?.id ?? crypto.randomUUID(),
     };

@@ -10,6 +10,8 @@ import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-ite
 import { MatChip } from '@angular/material/chips';
 import { FirebaseService } from '../../../services/firebase.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AdminItemCardComponent } from '../admin-item-card/admin-item-card.component';
+import { ItemCardComponent } from '../../item-card/item-card.component';
 
 @Component({
   selector: 'app-admin-panel',
@@ -23,6 +25,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     DragDropModule,
     MatChip,
     MatProgressSpinner,
+    AdminItemCardComponent,
+    ItemCardComponent,
   ],
   templateUrl: './admin-panel.component.html',
   styleUrl: './admin-panel.component.scss',
@@ -88,8 +92,8 @@ export class AdminPanelComponent {
     });
   }
 
-  cancelReservation(itemId: string, deviceId: string): void {
-    this.backend.cancelReservation(itemId, deviceId).pipe().subscribe(() => {
+  cancelReservation(item: Item): void {
+    this.backend.cancelReservation(item.id, item.reservedDeviceId).pipe().subscribe(() => {
       this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
     });
   }
