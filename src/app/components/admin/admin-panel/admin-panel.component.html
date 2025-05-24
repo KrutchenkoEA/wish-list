@@ -3,14 +3,14 @@
     <mat-spinner mode="indeterminate"></mat-spinner>
   </div>
 } @else {
-  <div class="admin-actions">
+  <div class="actions">
     <button (click)="openAddDialog()" color="primary" mat-raised-button>Добавить карточку</button>
     <button (click)="isExpanded.set(!isExpanded())" color="primary"
             mat-raised-button>{{ isExpanded() ? 'Свернуть все' : 'Развернуть все' }}
     </button>
   </div>
 
-  <div class="admin-section">
+  <div class="section">
     <h2>Все подарки</h2>
     <div (cdkDropListDropped)="drop($event)" cdkDropList>
       @for (item of items(); track i; let i = $index) {

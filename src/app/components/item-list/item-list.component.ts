@@ -9,15 +9,24 @@ import { FingerprintService } from '../../services/fingetprint.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
-import { log } from '@angular-devkit/build-angular/src/builders/ssr-dev-server';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent],
+  imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent, MatIcon, MatButton],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('expandCollapse', [
+      state('expanded', style({ height: '*', opacity: 1 })),
+      state('collapsed', style({ height: '0px', opacity: 0, overflow: 'hidden' })),
+      transition('expanded <=> collapsed', [animate('300ms ease-in-out')]),
+    ]),
+  ],
 })
 export class ItemListComponent {
   private backend = inject(FirebaseService);
@@ -32,6 +41,8 @@ export class ItemListComponent {
   );
 
   deviceId = inject(FingerprintService).getDeviceId();
+
+  rulesCollapsed = localStorage.getItem('wishlist_rulesCollapsed') === 'false';
 
   constructor() {
     effect(() => {
@@ -59,5 +70,10 @@ export class ItemListComponent {
     this.dialog.open(ReservationComponent, {
       data: { item },
     });
+  }
+
+  toggleRules(): void {
+    this.rulesCollapsed = !this.rulesCollapsed;
+    localStorage.setItem('wishlist_rulesCollapsed', this.rulesCollapsed.toString());
   }
 }
