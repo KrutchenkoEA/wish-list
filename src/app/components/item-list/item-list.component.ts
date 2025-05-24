@@ -42,7 +42,7 @@ export class ItemListComponent {
 
   deviceId = inject(FingerprintService).getDeviceId();
 
-  rulesCollapsed = localStorage.getItem('wishlist_rulesCollapsed') === 'false';
+  rulesCollapsed = localStorage.getItem('wishlist_rulesCollapsed') === 'true';
 
   constructor() {
     effect(() => {
