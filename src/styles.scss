@@ -14,11 +14,11 @@ body {
   flex-flow: column;
 
   &.dark-theme {
-    @include themes.dark-theme-mixin
+    @include themes.dark-theme-mixin;
   }
 
   &.light-theme {
-    @include themes.light-theme-mixin
+    @include themes.light-theme-mixin;
   }
 }
 

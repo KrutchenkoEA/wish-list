@@ -1,18 +1,5 @@
 @use 'card-list';
 
-.admin-actions {
-  display: flex;
-
-  button {
-    width: 100%;
-  }
-}
-
-.admin-section {
-  display: flex;
-  flex-direction: column;
-}
-
 .drag-handle {
   position: absolute;
   top: 1rem;

@@ -16,3 +16,16 @@
   height: 60dvh;
   width: 100%;
 }
+
+.actions {
+  display: flex;
+
+  button {
+    width: 100%;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}

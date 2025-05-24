@@ -3,7 +3,7 @@
 
   @if (item.imageData) {
     <div class="image-wrapper">
-      <img [src]="item.imageData" alt="Изображение подарка" mat-card-image />
+      <img loading="lazy" [src]="item.imageData" alt="Изображение подарка" mat-card-image />
     </div>
   }
 
