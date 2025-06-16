@@ -6,9 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Item } from '../../models/item.model';
-import { FingerprintService } from '../../services/fingetprint.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { Item } from '../../../models/item.model';
+import { FingerprintService } from '../../../services/fingetprint.service';
+import { FirebaseService } from '../../../services/firebase.service';
 
 @Component({
   selector: 'app-reservation',
@@ -28,6 +28,7 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class ReservationComponent implements OnInit {
   item!: Item;
+  collectionId!: string;
 
   dialogRef = inject<MatDialogRef<ReservationComponent>>(MatDialogRef);
   private backend = inject(FirebaseService);
@@ -44,8 +45,9 @@ export class ReservationComponent implements OnInit {
     return this.formGroup.controls.name;
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { item: Item } | null) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { item: Item; collectionId?: string } | null) {
     this.item = data.item;
+    this.collectionId = data?.collectionId ?? this.item.collectionId ?? 'common';
   }
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class ReservationComponent implements OnInit {
 
     localStorage.setItem('users', JSON.stringify(users));
 
-    this.backend.reserveItem(this.item.id, name, deviceId).pipe().subscribe({
+    this.backend.reserveItem(this.item.id, name, deviceId, this.collectionId).pipe().subscribe({
       next: () => {
         this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });
         this.dialogRef.close(true);

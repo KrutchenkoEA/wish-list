@@ -1,0 +1,27 @@
+<div class="header">
+  <h2 class="title"> Уважаемые посетители сайта!</h2>
+  <!--        <mat-icon class="toggle-icon">{{ rulesCollapsed ? 'expand_more' : 'expand_less' }}</mat-icon>-->
+</div>
+
+<div class="rules-content">
+  <!--      <div class="rules-content" [@expandCollapse]="rulesCollapsed ? 'collapsed' : 'expanded'">-->
+  <ul>
+    @if (isActive()) {
+      <li>Мы составили для вас список желаний, для нашей ляльки! Если у Вас есть желание сделать подарок, найдите в
+        списке!)
+      </li>
+    }
+    <li>Вам понравился подарок? Жмите на кнопку
+      <button class="btn-small" mat-raised-button>Посмотреть подарок (ссылка)</button>
+      в карточке товара
+    </li>
+    <li>Заказали - отлично. Нажмите на кнопку
+      <button class="btn-small" mat-raised-button>Забронировать</button>
+      , введите свое имя. Это нужно для того, что бы подарки
+      не повторялись!
+    </li>
+    <li>Внимание! По ссылке не всегда может быть доступен именно этот товар, но Вы всегда можете найти его
+      аналог
+    </li>
+  </ul>
+</div>

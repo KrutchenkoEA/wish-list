@@ -9,6 +9,7 @@ import { AuthService } from './services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminLoginDialogComponent } from './components/admin/admin-login-dialog/admin-login-dialog.component';
 import { FingerprintService } from './services/fingetprint.service';
+import { COMMON_COLLECTION, COLLECTION_LIST } from './const/list.const';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,9 @@ export class AppComponent {
 
   currentTheme = this.theme.theme;
   isAdmin = this.auth.isAdmin();
+
+  commonCollection = COMMON_COLLECTION;
+  collectionList = COLLECTION_LIST;
 
   toggleTheme() {
     this.theme.toggleTheme();

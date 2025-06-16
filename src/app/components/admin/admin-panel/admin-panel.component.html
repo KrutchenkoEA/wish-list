@@ -1,8 +1,21 @@
+<div class="actions">
+  <button (click)="setCurrentCollection(commonCollection)"
+          [class.button-selected]="currentCollection.route === commonCollection.route"
+          mat-raised-button>{{ commonCollection.name }}
+  </button>
+  @for (page of collectionList; track page.route) {
+    <button [class.button-selected]="currentCollection.route === page.route" (click)="setCurrentCollection(page)"
+            mat-raised-button>{{ page.name }}
+    </button>
+  }
+</div>
+
 @if (loading()) {
   <div class="spinner-container">
     <mat-spinner mode="indeterminate"></mat-spinner>
   </div>
 } @else {
+
   <div class="actions">
     <button (click)="openAddDialog()" color="primary" mat-raised-button>Добавить карточку</button>
     <button (click)="isExpanded.set(!isExpanded())" color="primary"
@@ -11,23 +24,30 @@
   </div>
 
   <div class="section">
-    <h2>Все подарки</h2>
+    <h2>Коллекция: {{ currentCollection.name }}</h2>
     <div (cdkDropListDropped)="drop($event)" cdkDropList>
-      @for (item of items(); track i; let i = $index) {
-        <app-admin-item-card cdkDrag
-                             [item]="item"
-                             [expanded]="isExpanded()"
-                             (openEditDialog)="openEditDialog($event)"
-                             (deleteItem)="deleteItem($event)"
-                             (cancelReservation)="cancelReservation($event)">
-          <div cdkDragHandle class="drag-handle">
-            <svg fill="currentColor" viewBox="0 0 24 24" width="24px">
-              <path
-                d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-          </div>
-        </app-admin-item-card>
+      @if (items()?.length) {
+        @for (item of items(); track i; let i = $index) {
+          <app-admin-item-card cdkDrag
+                               [item]="item"
+                               [expanded]="isExpanded()"
+                               (openEditDialog)="openEditDialog($event)"
+                               (deleteItem)="deleteItem($event)"
+                               (cancelReservation)="cancelReservation($event)">
+            <div cdkDragHandle class="drag-handle">
+              <svg fill="currentColor" viewBox="0 0 24 24" width="24px">
+                <path
+                  d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
+            </div>
+          </app-admin-item-card>
+        }
+      } @else {
+        <div class="empty">
+          <mat-icon>{{ 'star' }}</mat-icon>
+          Список пуст
+        </div>
       }
     </div>
   </div>

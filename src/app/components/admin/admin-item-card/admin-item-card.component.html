@@ -1,4 +1,5 @@
-<mat-card (click)="expand()" [class.item-card_clickable]="!cardExpanded || !expanded" class="item-card">
+<mat-card (click)="expand()" [class.item-card_clickable]="!cardExpanded || !expanded"
+          [class.item-card_disabled]="!!item.reservedBy" class="item-card">
   <mat-card-title>
     {{ item.title }}
     @if (!item.isActive) {

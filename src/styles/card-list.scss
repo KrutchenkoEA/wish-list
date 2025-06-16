@@ -29,3 +29,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  height: 40dvh;
+  width: 100%;
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: 2rem;
+}

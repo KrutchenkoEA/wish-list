@@ -1,14 +1,17 @@
 <mat-toolbar class="toolbar" color="primary">
   <div class="toolbar__menu">
     <span class="logo" routerLink="">🎁</span>
-    <span class="tab" routerLink="">Лист желаний</span>
+    <span class="tab" routerLink="/collection/{{commonCollection.route}}">{{ commonCollection.name }}</span>
     @if (isAdmin()) {
+      @for (item of collectionList; track item.route) {
+        <span class="tab" routerLink="/collection/{{item.route}}">{{ item.name }}</span>
+      }
       <span class="tab" routerLink="/admin">Админ</span>
     }
   </div>
   <span class="spacer"></span>
 
-  <p class="device">deviceId: {{fingerprintService.getDeviceId()}}</p>
+  <p class="device">deviceId: {{ fingerprintService.getDeviceId() }}</p>
 
   <button (click)="toggleTheme()" [matTooltip]="currentTheme() === 'dark' ? 'Светлая тема' : 'Тёмная тема'"
           mat-icon-button>

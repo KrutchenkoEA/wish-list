@@ -1,0 +1,27 @@
+@if (loading()) {
+  <div class="spinner-container">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+} @else {
+  <div class="actions">
+    <app-item-info></app-item-info>
+  </div>
+  <div class="section">
+    @if (activeItems()?.length) {
+      @for (item of activeItems(); track item.id) {
+        <app-item-card [deviceId]="deviceId"
+                       (cancelReservation)="cancelReservation($event)"
+                       (openReservation)="openReservation($event)"
+                       class="card"
+                       [item]="item">
+        </app-item-card>
+      }
+    } @else {
+      <div class="empty">
+        <mat-icon>{{ 'star' }}</mat-icon>
+        Список пуст
+      </div>
+    }
+  </div>
+}
+

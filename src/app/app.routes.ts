@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { COMMON_COLLECTION } from './const/list.const';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./components/item-list/item-list.component').then(m => m.ItemListComponent),
+    redirectTo: `collection/${COMMON_COLLECTION.route}`,
+    pathMatch: 'full',
+  },
+  {
+    path: 'collection/:collectionId',
+    loadComponent: () => import('./components/user/item-list/item-list.component').then(m => m.ItemListComponent),
   },
   {
     path: 'admin',
@@ -13,6 +19,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: `collection/${COMMON_COLLECTION.route}`,
   },
 ];
