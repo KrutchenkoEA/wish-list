@@ -28,6 +28,7 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class ReservationComponent implements OnInit {
   item!: Item;
+  listId!: string;
 
   dialogRef = inject<MatDialogRef<ReservationComponent>>(MatDialogRef);
   private backend = inject(FirebaseService);
@@ -44,8 +45,9 @@ export class ReservationComponent implements OnInit {
     return this.formGroup.controls.name;
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { item: Item } | null) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { item: Item; listId?: string } | null) {
     this.item = data.item;
+    this.listId = data?.listId ?? this.item.listId ?? 'common';
   }
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class ReservationComponent implements OnInit {
 
     localStorage.setItem('users', JSON.stringify(users));
 
-    this.backend.reserveItem(this.item.id, name, deviceId).pipe().subscribe({
+    this.backend.reserveItem(this.item.id, name, deviceId, this.listId).pipe().subscribe({
       next: () => {
         this.snackBar.open('Подарок забронирован!', 'Закрыть', { duration: 3000 });
         this.dialogRef.close(true);

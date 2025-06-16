@@ -1,9 +1,15 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { COMMON_ID } from './const/list.const';
 
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: `list/${COMMON_ID.route}`,
+    pathMatch: 'full',
+  },
+  {
+    path: 'list/:listId',
     loadComponent: () => import('./components/item-list/item-list.component').then(m => m.ItemListComponent),
   },
   {
@@ -13,6 +19,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: `list/${COMMON_ID.route}`,
   },
 ];

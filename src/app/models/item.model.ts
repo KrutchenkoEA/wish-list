@@ -9,4 +9,5 @@ export interface Item {
   reservedDeviceId?: string;
   imageData?: string;
   sortOrder?: number;
+  listId: string;
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -9,23 +9,20 @@ import { FingerprintService } from '../../services/fingetprint.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatButton } from '@angular/material/button';
+import { ActivatedRoute } from '@angular/router';
+import { ItemInfoComponent } from '../item-info/item-info.component';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent, MatButton],
+  imports: [
+    CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent, ItemInfoComponent, MatIcon,
+    MatIcon,
+  ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('expandCollapse', [
-      state('expanded', style({ height: '*', opacity: 1 })),
-      state('collapsed', style({ height: '0px', opacity: 0, overflow: 'hidden' })),
-      transition('expanded <=> collapsed', [animate('300ms ease-in-out')]),
-    ]),
-  ],
 })
 export class ItemListComponent {
   private backend = inject(FirebaseService);
@@ -38,29 +35,33 @@ export class ItemListComponent {
   readonly activeItems = computed(() =>
     this.items()?.filter(item => item.isActive),
   );
-
+  private route = inject(ActivatedRoute);
   deviceId = inject(FingerprintService).getDeviceId();
 
-  rulesCollapsed = localStorage.getItem('wishlist_rulesCollapsed') === 'true';
-
   constructor() {
-    effect(() => {
-      this.loading.set(true);
-      this.backend.getItems().subscribe({
-        next: (items) => {
-          this.items.set(items);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.items.set([]);
-          this.loading.set(false);
-        },
-      });
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('listId') ?? 'common';
+      this.loadItems(id);
+    });
+  }
+
+  loadItems(listId: string): void {
+    this.loading.set(true);
+    this.backend.getItems(listId).subscribe({
+      next: (items) => {
+        this.items.set(items);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.items.set([]);
+        this.loading.set(false);
+      },
     });
   }
 
   cancelReservation(item: Item): void {
-    this.backend.cancelReservation(item.id, item.reservedDeviceId).pipe().subscribe(() => {
+    const listId = item.listId || 'common';
+    this.backend.cancelReservation(item.id, item.reservedDeviceId, listId).pipe().subscribe(() => {
       this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
     });
   }
@@ -69,10 +70,5 @@ export class ItemListComponent {
     this.dialog.open(ReservationComponent, {
       data: { item },
     });
-  }
-
-  toggleRules(): void {
-    this.rulesCollapsed = !this.rulesCollapsed;
-    localStorage.setItem('wishlist_rulesCollapsed', this.rulesCollapsed.toString());
   }
 }
