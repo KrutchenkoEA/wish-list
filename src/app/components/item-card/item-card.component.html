@@ -1,4 +1,4 @@
-<mat-card class="item-card">
+<mat-card [class.item-card_disabled]="!!item.reservedBy" class="item-card">
   <mat-card-title>{{ item.title }}</mat-card-title>
 
   @if (item.imageData) {

@@ -10,13 +10,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-item-list',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent, MatIcon, MatButton],
+  imports: [CommonModule, MatGridListModule, MatProgressSpinnerModule, ItemCardComponent, MatButton],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

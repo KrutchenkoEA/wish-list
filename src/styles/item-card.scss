@@ -53,6 +53,10 @@
   &_clickable {
     cursor: pointer;
   }
+
+  &_disabled {
+    background-color: var(--mat-sys-secondary-container);
+  }
 }
 
 mat-card-title {
