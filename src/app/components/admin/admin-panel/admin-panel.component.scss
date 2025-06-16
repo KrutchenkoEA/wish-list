@@ -9,3 +9,12 @@
   width: 24px;
   height: 24px;
 }
+
+mat-button-toggle-group,
+mat-button-toggle {
+  width: 100%;
+}
+
+.button-selected.mat-mdc-raised-button:not(:disabled){
+  background-color: var(--mat-sys-inverse-primary) ;
+}

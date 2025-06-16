@@ -3,11 +3,11 @@ export interface Item {
   title: string;
   description: string;
   link: string;
+  collectionId: string;
+  isActive: boolean;
   reservedBy?: string;
   reservedAt?: number;
-  isActive: boolean;
   reservedDeviceId?: string;
   imageData?: string;
   sortOrder?: number;
-  listId: string;
 }

@@ -34,7 +34,7 @@ export class MigrationService {
 
           batch.set(newRef, {
             ...data,
-            listId: 'common',
+            collectionId: 'common',
           });
         });
 

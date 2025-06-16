@@ -19,26 +19,24 @@ import { from, Observable, switchMap } from 'rxjs';
 export class FirebaseService {
   private firestore = inject(Firestore);
 
-  getItems(listId: string = 'common'): Observable<Item[]> {
-    const sortedQuery = query(collection(this.firestore, listId), orderBy('sortOrder', 'asc'));
+  getItems(collectionId: string = 'common'): Observable<Item[]> {
+    const sortedQuery = query(collection(this.firestore, collectionId), orderBy('sortOrder', 'asc'));
     return collectionData(sortedQuery, { idField: 'id' }) as Observable<Item[]>;
   }
 
-  addItem(item: Item): Observable<void> {
-    const listId = item.listId || 'common';
-    const newItem: Item = { ...item, id: item.id || uuidv4(), listId };
-    const docRef = doc(this.firestore, `${listId}/${newItem.id}`);
+  addItem(item: Item, collectionId: string = 'common'): Observable<void> {
+    const newItem: Item = { ...item, id: item.id || uuidv4(), collectionId: collectionId };
+    const docRef = doc(this.firestore, `${collectionId}/${newItem.id}`);
     return from(setDoc(docRef, newItem));
   }
 
-  deleteItem(itemId: string, listId: string = 'common'): Observable<void> {
-    const docRef = doc(this.firestore, `${listId}/${itemId}`);
+  deleteItem(itemId: string, collectionId: string = 'common'): Observable<void> {
+    const docRef = doc(this.firestore, `${collectionId}/${itemId}`);
     return from(deleteDoc(docRef));
   }
 
-  updateItem(item: Item): Observable<void> {
-    const listId = item.listId || 'common';
-    const docRef = doc(this.firestore, `${listId}/${item.id}`);
+  updateItem(item: Item, collectionId: string = 'common'): Observable<void> {
+    const docRef = doc(this.firestore, `${collectionId}/${item.id}`);
     return from(
       updateDoc(docRef, {
         title: item.title,
@@ -50,12 +48,13 @@ export class FirebaseService {
         reservedDeviceId: item.reservedDeviceId ?? null,
         imageData: item.imageData ?? null,
         sortOrder: item.sortOrder ?? null,
+        collectionId: collectionId,
       }),
     );
   }
 
-  reserveItem(itemId: string, name: string, deviceId: string, listId: string = 'common'): Observable<void> {
-    const docRef = doc(this.firestore, `${listId}/${itemId}`);
+  reserveItem(itemId: string, name: string, deviceId: string, collectionId: string = 'common'): Observable<void> {
+    const docRef = doc(this.firestore, `${collectionId}/${itemId}`);
     return from(getDoc(docRef)).pipe(
       switchMap((snapshot) => {
         const item = snapshot.data() as Item;
@@ -75,8 +74,8 @@ export class FirebaseService {
     );
   }
 
-  cancelReservation(itemId: string, deviceId: string, listId: string = 'common'): Observable<void> {
-    const docRef = doc(this.firestore, `${listId}/${itemId}`);
+  cancelReservation(itemId: string, deviceId: string, collectionId: string = 'common'): Observable<void> {
+    const docRef = doc(this.firestore, `${collectionId}/${itemId}`);
     return from(getDoc(docRef)).pipe(
       switchMap((snapshot) => {
         const item = snapshot.data() as Item;

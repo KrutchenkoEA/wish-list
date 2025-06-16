@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { COMMON_ID } from '../../const/list.const';
+import { COMMON_COLLECTION } from '../../const/list.const';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
@@ -31,7 +31,7 @@ export class ItemInfoComponent {
   }
 
   public isActive(): boolean {
-    return this.router.isActive(`list/${COMMON_ID.route}`, {
+    return this.router.isActive(`list/${COMMON_COLLECTION.route}`, {
       queryParams: 'exact',
       paths: 'exact',
       fragment: 'ignored',

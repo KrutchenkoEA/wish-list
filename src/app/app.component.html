@@ -1,10 +1,10 @@
 <mat-toolbar class="toolbar" color="primary">
   <div class="toolbar__menu">
     <span class="logo" routerLink="">🎁</span>
-    <span class="tab" routerLink="/list/{{commonId.route}}">{{ commonId.name }}</span>
+    <span class="tab" routerLink="/collection/{{commonCollection.route}}">{{ commonCollection.name }}</span>
     @if (isAdmin()) {
-      @for (item of otherListIds; track item.route) {
-        <span class="tab" routerLink="/list/{{item.route}}">{{ item.name }}</span>
+      @for (item of collectionList; track item.route) {
+        <span class="tab" routerLink="/collection/{{item.route}}">{{ item.name }}</span>
       }
       <span class="tab" routerLink="/admin">Админ</span>
     }

@@ -12,6 +12,7 @@ import { ReservationComponent } from '../reservation/reservation.component';
 import { ActivatedRoute } from '@angular/router';
 import { ItemInfoComponent } from '../item-info/item-info.component';
 import { MatIcon } from '@angular/material/icon';
+import { COMMON_COLLECTION } from '../../const/list.const';
 
 @Component({
   selector: 'app-item-list',
@@ -37,17 +38,19 @@ export class ItemListComponent {
   );
   private route = inject(ActivatedRoute);
   deviceId = inject(FingerprintService).getDeviceId();
+  currentCollectionId: string | null = COMMON_COLLECTION.route;
 
   constructor() {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('listId') ?? 'common';
+      const id = params.get('collectionId') ?? 'common';
+      this.currentCollectionId = id;
       this.loadItems(id);
     });
   }
 
-  loadItems(listId: string): void {
+  loadItems(collectionId: string): void {
     this.loading.set(true);
-    this.backend.getItems(listId).subscribe({
+    this.backend.getItems(collectionId).subscribe({
       next: (items) => {
         this.items.set(items);
         this.loading.set(false);
@@ -60,15 +63,14 @@ export class ItemListComponent {
   }
 
   cancelReservation(item: Item): void {
-    const listId = item.listId || 'common';
-    this.backend.cancelReservation(item.id, item.reservedDeviceId, listId).pipe().subscribe(() => {
+    this.backend.cancelReservation(item.id, item.reservedDeviceId, this.currentCollectionId).pipe().subscribe(() => {
       this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
     });
   }
 
   openReservation(item: Item): void {
     this.dialog.open(ReservationComponent, {
-      data: { item },
+      data: { item, collectionId: this.currentCollectionId },
     });
   }
 }
