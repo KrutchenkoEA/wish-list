@@ -6,9 +6,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 @Component({
   selector: 'app-item-info',
-  imports: [
-    MatButton,
-  ],
+  imports: [MatButton],
   templateUrl: './item-info.component.html',
   styleUrl: './item-info.component.scss',
   standalone: true,
@@ -20,6 +18,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       transition('expanded <=> collapsed', [animate('300ms ease-in-out')]),
     ]),
   ],
+  host: {
+    '(click)': 'toggleRules()',
+  },
 })
 export class ItemInfoComponent {
   rulesCollapsed = localStorage.getItem('wishlist_rulesCollapsed') === 'true';
@@ -31,7 +32,7 @@ export class ItemInfoComponent {
   }
 
   public isActive(): boolean {
-    return this.router.isActive(`list/${COMMON_COLLECTION.route}`, {
+    return this.router.isActive(`collection/${COMMON_COLLECTION.route}`, {
       queryParams: 'exact',
       paths: 'exact',
       fragment: 'ignored',
