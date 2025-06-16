@@ -30,7 +30,7 @@ export class MigrationService {
 
         snapshot.forEach(docSnap => {
           const data = docSnap.data() as Item;
-          const newRef = doc(this.firestore, `wishlists/common/items/${docSnap.id}`);
+          const newRef = doc(this.firestore, `common/${docSnap.id}`);
 
           batch.set(newRef, {
             ...data,
