@@ -2,17 +2,17 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Item } from '../../models/item.model';
+import { Item } from '../../../models/item.model';
 import { ItemCardComponent } from '../item-card/item-card.component';
-import { FirebaseService } from '../../services/firebase.service';
-import { FingerprintService } from '../../services/fingetprint.service';
+import { FirebaseService } from '../../../services/firebase.service';
+import { FingerprintService } from '../../../services/fingetprint.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
 import { ActivatedRoute } from '@angular/router';
-import { ItemInfoComponent } from '../item-info/item-info.component';
+import { ItemInfoComponent } from '../../item-info/item-info.component';
 import { MatIcon } from '@angular/material/icon';
-import { COMMON_COLLECTION } from '../../const/list.const';
+import { COMMON_COLLECTION } from '../../../const/list.const';
 
 @Component({
   selector: 'app-item-list',

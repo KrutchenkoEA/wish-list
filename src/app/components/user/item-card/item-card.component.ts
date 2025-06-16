@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Item } from '../../models/item.model';
+import { Item } from '../../../models/item.model';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({

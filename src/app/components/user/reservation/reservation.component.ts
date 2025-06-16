@@ -6,9 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Item } from '../../models/item.model';
-import { FingerprintService } from '../../services/fingetprint.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { Item } from '../../../models/item.model';
+import { FingerprintService } from '../../../services/fingetprint.service';
+import { FirebaseService } from '../../../services/firebase.service';
 
 @Component({
   selector: 'app-reservation',

@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: 'collection/:collectionId',
-    loadComponent: () => import('./components/item-list/item-list.component').then(m => m.ItemListComponent),
+    loadComponent: () => import('./components/user/item-list/item-list.component').then(m => m.ItemListComponent),
   },
   {
     path: 'admin',
