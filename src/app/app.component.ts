@@ -1,15 +1,15 @@
-import { Router, RouterModule } from '@angular/router';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ThemeService } from './services/theme.service';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
-import { AuthService } from './services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AdminLoginDialogComponent } from './components/admin/admin-login-dialog/admin-login-dialog.component';
-import { FingerprintService } from './services/fingetprint.service';
-import { COMMON_COLLECTION, COLLECTION_LIST } from './const/list.const';
+import {Router, RouterModule} from '@angular/router';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ThemeService} from './services/theme.service';
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatTooltip} from '@angular/material/tooltip';
+import {AuthService} from './services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
+import {AdminLoginDialogComponent} from './components/admin/admin-login-dialog/admin-login-dialog.component';
+import {FingerprintService} from './services/fingetprint.service';
+import {ADMIN_COLLECTION, COLLECTION_LIST, COMMON_COLLECTION} from './const/list.const';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,7 @@ export class AppComponent {
   currentTheme = this.theme.theme;
   isAdmin = this.auth.isAdmin();
 
+  adminCollection = ADMIN_COLLECTION;
   commonCollection = COMMON_COLLECTION;
   collectionList = COLLECTION_LIST;
 
@@ -55,5 +56,8 @@ export class AppComponent {
     this.auth.disableAdminMode();
     this.router.navigate(['/']);
   }
+
+  protected readonly isFinite = isFinite;
+  protected readonly parent = parent;
 }
 

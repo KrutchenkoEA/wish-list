@@ -1,11 +1,16 @@
 <div class="actions">
   <button (click)="setCurrentCollection(commonCollection)"
-          [class.button-selected]="currentCollection.route === commonCollection.route"
+          [class.button_selected]="currentCollection.route === commonCollection.route"
+          class="button"
           mat-raised-button>{{ commonCollection.name }}
   </button>
   @for (page of collectionList; track page.route) {
-    <button [class.button-selected]="currentCollection.route === page.route" (click)="setCurrentCollection(page)"
-            mat-raised-button>{{ page.name }}
+    <button [class.button_selected]="currentCollection.route === page.route"
+            class="button button_reverse"
+            (click)="setCurrentCollection(page)"
+            mat-raised-button>
+      {{ page.name }}
+      <mat-icon (click)="changeVisible($event,page)">{{ page.isVisible ? 'disabled_visible' : 'visibility' }}</mat-icon>
     </button>
   }
 </div>

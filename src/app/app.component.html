@@ -2,11 +2,13 @@
   <div class="toolbar__menu">
     <span class="logo" routerLink="">🎁</span>
     <span class="tab" routerLink="/collection/{{commonCollection.route}}">{{ commonCollection.name }}</span>
-    @if (isAdmin()) {
-      @for (item of collectionList; track item.route) {
+    @for (item of collectionList; track item.route) {
+      @if (isAdmin() || item.isVisible) {
         <span class="tab" routerLink="/collection/{{item.route}}">{{ item.name }}</span>
       }
-      <span class="tab" routerLink="/admin">Админ</span>
+    }
+    @if (isAdmin()) {
+      <span class="tab" routerLink="/{{adminCollection.route}}">{{ adminCollection.name }}</span>
     }
   </div>
   <span class="spacer"></span>
@@ -29,4 +31,4 @@
   }
 </mat-toolbar>
 
-<router-outlet />
+<router-outlet/>

@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Item } from '../../../models/item.model';
-import { AddEditItemDialogComponent } from '../add-edit-item-dialog/add-edit-item-dialog.component';
-import { FirebaseService } from '../../../services/firebase.service';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { AdminItemCardComponent } from '../admin-item-card/admin-item-card.component';
-import { COLLECTION_LIST, COMMON_COLLECTION } from '../../../const/list.const';
-import { MatIcon } from '@angular/material/icon';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatButton} from '@angular/material/button';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {CdkDragDrop, DragDropModule, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Item} from '../../../models/item.model';
+import {AddEditItemDialogComponent} from '../add-edit-item-dialog/add-edit-item-dialog.component';
+import {FirebaseService} from '../../../services/firebase.service';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {AdminItemCardComponent} from '../admin-item-card/admin-item-card.component';
+import {COLLECTION_LIST, COMMON_COLLECTION} from '../../../const/list.const';
+import {MatIcon} from '@angular/material/icon';
+import {ICollection} from '../../../models/collection.model';
 
 @Component({
   selector: 'app-admin-panel',
@@ -69,7 +70,7 @@ export class AdminPanelComponent {
     ref.afterClosed().subscribe(result => {
       if (result) {
         this.backend.addItem(result, this.currentCollection.route).pipe().subscribe(() => {
-          this.snackBar.open('Подарок добавлен!', 'Ок', { duration: 2000 });
+          this.snackBar.open('Подарок добавлен!', 'Ок', {duration: 2000});
         });
       }
     });
@@ -83,8 +84,8 @@ export class AdminPanelComponent {
 
     ref.afterClosed().subscribe(result => {
       if (result) {
-        this.backend.updateItem({ ...item, ...result }, this.currentCollection.route).pipe().subscribe(() => {
-          this.snackBar.open('Подарок обновлён!', 'Ок', { duration: 2000 });
+        this.backend.updateItem({...item, ...result}, this.currentCollection.route).pipe().subscribe(() => {
+          this.snackBar.open('Подарок обновлён!', 'Ок', {duration: 2000});
         });
       }
     });
@@ -92,13 +93,13 @@ export class AdminPanelComponent {
 
   deleteItem(itemId: string): void {
     this.backend.deleteItem(itemId, this.currentCollection.route).pipe().subscribe(() => {
-      this.snackBar.open('Подарок удалён', 'Ок', { duration: 2000 });
+      this.snackBar.open('Подарок удалён', 'Ок', {duration: 2000});
     });
   }
 
   cancelReservation(item: Item): void {
     this.backend.cancelReservation(item.id, item.reservedDeviceId, this.currentCollection.route).pipe().subscribe(() => {
-      this.snackBar.open('Бронирование отменено', 'Ок', { duration: 2000 });
+      this.snackBar.open('Бронирование отменено', 'Ок', {duration: 2000});
     });
   }
 
@@ -119,9 +120,15 @@ export class AdminPanelComponent {
     this.items.set(currentItems);
   }
 
-  setCurrentCollection(collection: { route: string, name: string }): void {
+  setCurrentCollection(collection: ICollection): void {
     if (this.currentCollection.route === collection.route) return;
     this.currentCollection = collection;
     this.loadItems(this.currentCollection.route);
+  }
+
+  changeVisible(event, page: ICollection): void {
+    event.stopPropagation();
+    event.preventDefault();
+    page.isVisible = !page.isVisible
   }
 }

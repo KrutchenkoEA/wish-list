@@ -15,6 +15,16 @@ mat-button-toggle {
   width: 100%;
 }
 
-.button-selected.mat-mdc-raised-button:not(:disabled){
-  background-color: var(--mat-sys-inverse-primary) ;
+.button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_reverse {
+    flex-direction: row-reverse;
+  }
+
+  &_selected.mat-mdc-raised-button:not(:disabled) {
+    background-color: var(--mat-sys-inverse-primary);
+  }
 }
